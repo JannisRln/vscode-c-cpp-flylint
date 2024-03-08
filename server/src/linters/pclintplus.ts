@@ -133,7 +133,12 @@ export class PclintPlus extends Linter {
     }
 
     private getSeverityCode(severity: string): DiagnosticSeverity {
-        let output = this.settings.pclintplus.severityLevels[severity as keyof PclintPlusSeverityMaps];
-        return VS_DiagnosticSeverity.from(output);
+        if (this.settings.pclintplus.severityLevels.hasOwnProperty(severity)) {
+            let output = this.settings.pclintplus.severityLevels[severity as keyof PclintPlusSeverityMaps];
+            return VS_DiagnosticSeverity.from(output);
+        } else {
+            // return default severity
+            return VS_DiagnosticSeverity.from(severity);
+        }
     }
 }
